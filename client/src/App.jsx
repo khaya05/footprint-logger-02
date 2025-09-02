@@ -1,7 +1,56 @@
-import React from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import {
+  AllActivities,
+  DashboardLayout,
+  DashboardStats,
+  HomeLayout,
+  Landing,
+  Login,
+  Profile,
+  Register,
+} from './pages';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <HomeLayout />,
+    children: [
+      {
+        index: true,
+        element: <Landing />,
+      },
+      {
+        path: '/register',
+        element: <Register />,
+      },
+      {
+        path: '/Login',
+        element: <Login />,
+      },
+      {
+        path: 'dashboard',
+        element: <DashboardLayout />,
+        children: [
+          {
+            index: true,
+            element: <DashboardStats />,
+          },
+          {
+            path: 'activities',
+            element: <AllActivities />,
+          },
+          {
+            path: 'profile',
+            element: <Profile />,
+          },
+        ],
+      },
+    ],
+  },
+]);
 
 const App = () => {
-  return <div className='text-3xl font-bold underline'>App</div>;
+  return <RouterProvider router={router} />;
 };
 
 export default App;
