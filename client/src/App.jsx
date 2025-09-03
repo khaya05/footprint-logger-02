@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import {
+  AddActivity,
   AllActivities,
   DashboardLayout,
   DashboardStats,
@@ -8,6 +9,7 @@ import {
   Login,
   Profile,
   Register,
+  Stats,
 } from './pages';
 
 const router = createBrowserRouter([
@@ -42,6 +44,14 @@ const router = createBrowserRouter([
           {
             path: 'profile',
             element: <Profile />,
+          },
+          {
+            path: 'add-activity',
+            element: <AddActivity />,
+          },
+          {
+            path: 'Stats',
+            element: <Stats />,
           },
         ],
       },

@@ -8,7 +8,7 @@ const SubmitBtn = ({ formBtn }) => {
   return (
     <button
       type='submit'
-      className='bg-green-500 text-white w-full mt-2 rounded-sm capitalize py-1 hover:bg-green-600 hover:cursor-pointer disabled:cursor-not-allowed disabled:bg-green-400'
+      className='green-btn'
       disabled={isSubmitting}
     >
       {isSubmitting ? 'submitting' : 'submit'}

@@ -1,5 +1,15 @@
+export { default as BigNavbar } from './BigNavbar';
+export { default as BigSidebar } from './BigSidebar';
+export { default as BigSidebarBtn } from './BigSidebarBtn';
 export { default as CustomLink } from './CustomLink';
 export { default as Hero } from './Hero';
 export { default as LoginForm } from './LoginForm';
 export { default as Logo } from './Logo';
+export { default as LogoutBtn } from './LogoutBtn';
+export { default as Modal } from './Modal';
+export { default as ProfileBtn } from './ProfileBtn';
 export { default as RegisterForm } from './RegisterForm';
+export { default as SidebarPages } from './SidebarPages';
+export { default as SmallLogo } from './SmallLogo';
+export { default as SmallNavbar } from './SmallNavbar';
+export { default as SmallSidebar } from './SmallSidebar';

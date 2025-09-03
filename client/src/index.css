@@ -11,7 +11,6 @@
 
   body{
     color: var(--medium-gray);
-    @apply p-6 lg:p-16
   }
 
   h1 {
@@ -24,12 +23,21 @@
     @apply text-4xl opacity-70 m-2;
   }
 
+  h3 {
+    color: var(--dark-gray);
+    @apply text-lg font-bold opacity-70 m-2;
+  }
+
   .form-wrapper {
     @apply flex flex-col items-center gap-2 shadow-lg border-t-green-500 border-t-4 w-[20rem] rounded-sm p-8
   }
 
   .center-form{
     @apply flex items-center justify-center h-[calc(100vh-8rem)]
+  }
+
+  .green-btn {
+    @apply bg-green-500 text-white w-full mt-2 rounded-sm capitalize py-1 hover:bg-green-600 hover:cursor-pointer disabled:cursor-not-allowed disabled:bg-green-400
   }
 }
 
