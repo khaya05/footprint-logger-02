@@ -25,7 +25,12 @@
 
   h3 {
     color: var(--dark-gray);
-    @apply text-lg font-bold opacity-70 m-2;
+    @apply text-lg opacity-70 m-2;
+  }
+
+  h4 {
+    color: var(--dark-gray);
+    @apply opacity-70 m-2;
   }
 
   .form-wrapper {
@@ -37,7 +42,11 @@
   }
 
   .green-btn {
-    @apply bg-green-500 text-white w-full mt-2 rounded-sm capitalize py-1 hover:bg-green-600 hover:cursor-pointer disabled:cursor-not-allowed disabled:bg-green-400
+    @apply bg-green-500 text-white w-fit mt-2 px-4 rounded-sm capitalize py-1 hover:bg-green-600 hover:cursor-pointer disabled:cursor-not-allowed disabled:bg-green-400
+  }
+
+  .outlet {
+    @apply bg-white shadow-xl p-4 rounded
   }
 }
 

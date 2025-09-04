@@ -1,10 +1,10 @@
-
+import {Link} from 'react-router-dom'
 
 const LogoutBtn = () => {
   return (
-    <button type='button' className='green-btn w-full px-4 bg-gray-400 hover:bg-green-500'>
+    <Link to='/login' className='green-btn w-full px-4 bg-gray-400 hover:bg-green-500 text-center'>
       Logout
-    </button>
+    </Link>
   );
 }
 

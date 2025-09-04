@@ -20,7 +20,7 @@ const BigNavbar = () => {
           !showSidebar && 'border-l border-gray-200'
         } w-full p-4`}
       >
-        <h3 className='md:text-3xl'>{currentTab || 'Stats'}</h3>
+        <h3 className='md:text-[2rem]'>{currentTab || 'Stats'}</h3>
         <ProfileBtn />
       </div>
     </nav>
