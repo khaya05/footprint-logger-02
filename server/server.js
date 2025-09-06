@@ -8,14 +8,17 @@ const app = express()
 
 import userRouter from './routes/userRouter.js'
 import activityRouter from './routes/activityRouter.js'
+import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js';
+
+// middleware
+app.use(errorHandlerMiddleware)
+
+
+// routes
 
 app.use(express.json())
 app.use('/api/v1/users', userRouter)
-app.use('/api/v1/activity', activityRouter)
-
-// app.use('*', (req, res) => {
-//   res.status(404).json({ msg: 'not found' })
-// })
+app.use('/api/v1/activities', activityRouter)
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
