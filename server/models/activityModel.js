@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import { CATEGORY_TYPES } from '../util/constants'
+import { CATEGORY_TYPES } from '../util/constants.js'
 
 const ActivitySchema = new mongoose.Schema(
   {

@@ -1,6 +1,6 @@
 import { body, param, query, validationResult } from 'express-validator';
-import { CATEGORY_TYPES } from '../util/constants';
-import { BadRequestError } from '../errors/customErrors';
+import { CATEGORY_TYPES } from '../util/constants.js';
+import { BadRequestError } from '../errors/customErrors.js';
 
 const handleValidationErrors = (validateValues) => {
   return [
@@ -8,12 +8,13 @@ const handleValidationErrors = (validateValues) => {
     (req, res, next) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        const errorMessages = errors.array().map((error) => error.msg)
-        throw new BadRequestError(errorMessages)
+        const errorMessages = errors.array().map((error) => error.msg);
+        throw new BadRequestError(errorMessages);
       }
-    }
-  ]
-}
+      next();
+    },
+  ];
+};
 
 export const validateCreateActivity = handleValidationErrors([
   body('category')

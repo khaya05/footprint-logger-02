@@ -1,10 +1,11 @@
+import { StatusCodes } from 'http-status-codes';
 import { NotFoundError } from '../errors/customErrors.js';
 import Activity from '../models/activityModel.js'
 import { asyncWrapper } from '../util/asyncWrapper.js';
 
 export const getAllActivities = asyncWrapper(async (req, res) => {
   const activities = await Activity.find({})
-  res.status(200).json({ activities })
+  res.status(StatusCodes.OK).json({ activities })
 })
 
 export const getActivity = asyncWrapper(async (req, res) => {
@@ -12,12 +13,12 @@ export const getActivity = asyncWrapper(async (req, res) => {
   const activity = await Activity.findById(id)
 
   if (!activity) throw new NotFoundError(`no activity with id: ${id}`)
-  res.status(200).json({ activity })
+  res.status(StatusCodes.OK).json({ activity })
 })
 
 export const createActivity = asyncWrapper(async (req, res) => {
   const activity = await Activity.create({ ...req.body })
-  res.status(201).json({ activity })
+  res.status(StatusCodes.CREATED).json({ activity })
 })
 
 export const updateActivity = asyncWrapper(async (req, res) => {
@@ -25,7 +26,7 @@ export const updateActivity = asyncWrapper(async (req, res) => {
   const activity = await Activity.findByIdAndUpdate(id, req.body, { new: true })
 
   if (!activity) throw new NotFoundError(`no activity with id: ${id}`)
-  res.status(200).json({ activity })
+  res.status(StatusCodes.OK).json({ activity })
 })
 
 export const deleteActivity = asyncWrapper(async (req, res) => {
@@ -34,5 +35,5 @@ export const deleteActivity = asyncWrapper(async (req, res) => {
 
   if (!activity) if (!activity) throw new NotFoundError(`no activity with id: ${id}`)
 
-  res.status(200).json({ msg: 'Activity deleted successfully' });
+  res.status(StatusCodes.OK).json({ msg: 'Activity deleted successfully' });
 });

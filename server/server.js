@@ -15,10 +15,13 @@ app.use(errorHandlerMiddleware)
 
 
 // routes
-
 app.use(express.json())
 app.use('/api/v1/users', userRouter)
 app.use('/api/v1/activities', activityRouter)
+
+// app.use('*', (req, res) => {
+//   res.status(404).json({ msg: 'not found' });
+// });
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
