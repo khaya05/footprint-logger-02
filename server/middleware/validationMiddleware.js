@@ -1,6 +1,7 @@
 import { body, param, query, validationResult } from 'express-validator';
 import { CATEGORY_TYPES } from '../util/constants.js';
 import { BadRequestError } from '../errors/customErrors.js';
+import User from '../models/userModel.js'
 
 const handleValidationErrors = (validateValues) => {
   return [
@@ -26,7 +27,7 @@ export const validateCreateActivity = handleValidationErrors([
   body('activity')
     .notEmpty()
     .withMessage('Activity name is required')
-    .isLength({ min: 2, max: 50 }) 
+    .isLength({ min: 2, max: 50 })
     .withMessage('Activity name must be between 2-50 characters'),
 
   body('amount')
@@ -138,3 +139,50 @@ export const validateDeleteActivity = handleValidationErrors([
     .isMongoId()
     .withMessage('Invalid activity ID')
 ]);
+
+export const validateRegisterUser = handleValidationErrors([
+  body('name')
+    .notEmpty()
+    .withMessage('name is required'),
+
+  body('lastName')
+    .notEmpty()
+    .withMessage('last name is required'),
+
+  body('email')
+    .notEmpty()
+    .withMessage('email is required')
+    .isEmail()
+    .withMessage('Invalid email')
+    .custom(async (email) => {
+      const user = await User.findOne({ email })
+
+      if (user) {
+        throw new BadRequestError('email already exist')
+      }
+    }),
+
+  body('password')
+    .notEmpty()
+    .withMessage('password is required!')
+    .isLength({ min: 8 })
+    .withMessage('password must be at least 8 characters'),
+
+  body('role')
+    .optional()
+    .isIn(['user', 'admin'])
+    .withMessage('invalid role')
+
+])
+
+export const validateLoginUser = handleValidationErrors([
+  body('email')
+    .notEmpty()
+    .withMessage('email is required')
+    .isEmail()
+    .withMessage('Invalid email'),
+
+  body('password')
+    .notEmpty()
+    .withMessage('password is required!')
+])

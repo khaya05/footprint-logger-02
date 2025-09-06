@@ -7,6 +7,7 @@ import mongoose from 'mongoose'
 const app = express()
 
 import userRouter from './routes/userRouter.js'
+import authRouter from './routes/authRouter.js'
 import activityRouter from './routes/activityRouter.js'
 import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js';
 
@@ -18,6 +19,7 @@ app.use(errorHandlerMiddleware)
 app.use(express.json())
 app.use('/api/v1/users', userRouter)
 app.use('/api/v1/activities', activityRouter)
+app.use('/api/v1/auth', authRouter)
 
 // app.use('*', (req, res) => {
 //   res.status(404).json({ msg: 'not found' });

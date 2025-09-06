@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { createActivity, deleteActivity, getActivity, getAllActivities, updateActivity } from "../controllers/activityController.js";
-import { validateActivityQuery, validateCreateActivity, validateDeleteActivity, validateGetActivity, validateUpdateActivity } from "../middleware/activityValidation.js";
+import { validateActivityQuery, validateCreateActivity, validateDeleteActivity, validateGetActivity, validateUpdateActivity } from "../middleware/validationMiddleware.js";
 const router = Router()
 
 router.route('/')
