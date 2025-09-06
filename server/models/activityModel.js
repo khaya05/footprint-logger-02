@@ -1,10 +1,11 @@
 import mongoose from 'mongoose'
+import { CATEGORY_TYPES } from '../util/constants'
 
 const ActivitySchema = new mongoose.Schema(
   {
     category: {
       type: String,
-      enum: ['transport', 'food', 'energy', 'digital']
+      enum: CATEGORY_TYPES
     },
     activity: String,
     amount: Number,

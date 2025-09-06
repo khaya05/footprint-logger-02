@@ -8,6 +8,13 @@ const app = express()
 
 import userRouter from './routes/userRouter.js'
 import activityRouter from './routes/activityRouter.js'
+import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js';
+
+// middleware
+app.use(errorHandlerMiddleware)
+
+
+// routes
 
 app.use(express.json())
 app.use('/api/v1/users', userRouter)

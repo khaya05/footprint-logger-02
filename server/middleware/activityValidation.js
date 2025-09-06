@@ -1,0 +1,125 @@
+import { body, param, query } from 'express-validator';
+import { CATEGORY_TYPES } from '../util/constants';
+
+export const validateCreateActivity = [
+  body('category')
+    .notEmpty()
+    .withMessage('Category is required')
+    .isIn(CATEGORY_TYPES)
+    .withMessage('Category must be one of: transport, food, energy, digital'),
+
+  body('activity')
+    .notEmpty()
+    .withMessage('Activity name is required')
+    .isLength({ min: 2, max: 50 }) 
+    .withMessage('Activity name must be between 2-50 characters'),
+
+  body('amount')
+    .isFloat({ min: 0.01 })
+    .withMessage('Amount must be a positive number greater than 0'),
+
+  body('unit')
+    .notEmpty()
+    .withMessage('Unit is required')
+    .isLength({ min: 1, max: 20 })
+    .withMessage('Unit must be between 1-20 characters'),
+
+  body('emissions')
+    .isFloat({ min: 0 })
+    .withMessage('Emissions must be a positive number'),
+
+  body('date')
+    .isISO8601()
+    .withMessage('Date must be a valid ISO 8601 date')
+    .toDate(),
+
+  body('notes')
+    .optional()
+    .isLength({ max: 500 })
+    .withMessage('Notes cannot exceed 500 characters')
+];
+
+export const validateUpdateActivity = [
+  param('id')
+    .isMongoId()
+    .withMessage('Invalid activity ID'),
+
+  body('category')
+    .optional()
+    .isIn(CATEGORY_TYPES)
+    .withMessage('Category must be one of: transport, food, energy, digital'),
+
+  body('activity')
+    .optional()
+    .isLength({ min: 2, max: 50 })
+    .withMessage('Activity name must be between 2-50 characters'),
+
+  body('amount')
+    .optional()
+    .isFloat({ min: 0.01 })
+    .withMessage('Amount must be a positive number greater than 0'),
+
+  body('unit')
+    .optional()
+    .isLength({ min: 1, max: 20 })
+    .withMessage('Unit must be between 1-20 characters'),
+
+  body('emissions')
+    .optional()
+    .isFloat({ min: 0 })
+    .withMessage('Emissions must be a positive number'),
+
+  body('date')
+    .optional()
+    .isISO8601()
+    .withMessage('Date must be a valid ISO 8601 date')
+    .toDate(),
+
+  body('notes')
+    .optional()
+    .isLength({ max: 500 })
+    .withMessage('Notes cannot exceed 500 characters')
+];
+
+export const validateGetActivity = [
+  param('id')
+    .isMongoId()
+    .withMessage('Invalid activity ID')
+];
+
+export const validateActivityQuery = [
+  query('category')
+    .optional()
+    .isIn(CATEGORY_TYPES)
+    .withMessage('Category must be one of: transport, food, energy, digital'),
+
+  query('startDate')
+    .optional()
+    .isISO8601()
+    .withMessage('Start date must be a valid ISO 8601 date')
+    .toDate(),
+
+  query('endDate')
+    .optional()
+    .isISO8601()
+    .withMessage('End date must be a valid ISO 8601 date')
+    .toDate(),
+
+  query('page')
+    .optional()
+    .isInt({ min: 1 })
+    .withMessage('Page must be a positive integer')
+    .toInt(),
+
+  query('limit')
+    .optional()
+    .isInt({ min: 1, max: 100 })
+    .withMessage('Limit must be between 1 and 100')
+    .toInt()
+];
+
+export const validateDeleteActivity = [
+  param('id')
+    .isMongoId()
+    .withMessage('Invalid activity ID')
+];
