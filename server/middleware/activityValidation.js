@@ -1,7 +1,21 @@
-import { body, param, query } from 'express-validator';
+import { body, param, query, validationResult } from 'express-validator';
 import { CATEGORY_TYPES } from '../util/constants';
+import { BadRequestError } from '../errors/customErrors';
 
-export const validateCreateActivity = [
+const handleValidationErrors = (validateValues) => {
+  return [
+    validateValues,
+    (req, res, next) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        const errorMessages = errors.array().map((error) => error.msg)
+        throw new BadRequestError(errorMessages)
+      }
+    }
+  ]
+}
+
+export const validateCreateActivity = handleValidationErrors([
   body('category')
     .notEmpty()
     .withMessage('Category is required')
@@ -37,9 +51,9 @@ export const validateCreateActivity = [
     .optional()
     .isLength({ max: 500 })
     .withMessage('Notes cannot exceed 500 characters')
-];
+]);
 
-export const validateUpdateActivity = [
+export const validateUpdateActivity = handleValidationErrors([
   param('id')
     .isMongoId()
     .withMessage('Invalid activity ID'),
@@ -79,15 +93,15 @@ export const validateUpdateActivity = [
     .optional()
     .isLength({ max: 500 })
     .withMessage('Notes cannot exceed 500 characters')
-];
+]);
 
-export const validateGetActivity = [
+export const validateGetActivity = handleValidationErrors([
   param('id')
     .isMongoId()
     .withMessage('Invalid activity ID')
-];
+]);
 
-export const validateActivityQuery = [
+export const validateActivityQuery = handleValidationErrors([
   query('category')
     .optional()
     .isIn(CATEGORY_TYPES)
@@ -116,10 +130,10 @@ export const validateActivityQuery = [
     .isInt({ min: 1, max: 100 })
     .withMessage('Limit must be between 1 and 100')
     .toInt()
-];
+]);
 
-export const validateDeleteActivity = [
+export const validateDeleteActivity = handleValidationErrors([
   param('id')
     .isMongoId()
     .withMessage('Invalid activity ID')
-];
+]);
