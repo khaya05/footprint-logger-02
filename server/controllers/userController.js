@@ -1,14 +1,13 @@
-// import { asyncWrapper } from "../util/asyncWrapper.js";
-// import User from '../models/userModel.js'
-// import { StatusCodes } from "http-status-codes";
+import { asyncWrapper } from "../util/asyncWrapper.js";
+import User from '../models/userModel.js'
+import { StatusCodes } from "http-status-codes";
 
-// export const login = async () => {
-//   console.log('logged in');
+export const getCurrentUser = asyncWrapper(async (req, res) => {
+  const user = await User.findById(req.user.userId)
+  res.status(StatusCodes.OK).json({ user })
+})
 
-// }
-
-// export const register = asyncWrapper(async (req, res) => {
-//   const user = await User.create(req.body);
-//   res.status(StatusCodes.CREATED).json({user})
-
-// })
+export const updateUser = asyncWrapper(async (req, res) => {
+  const updatedUser = await User.findByIdAndUpdate(req.user.userId, req.body)
+  res.status(StatusCodes.OK).json({ msg: 'user update' })
+})

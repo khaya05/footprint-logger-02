@@ -13,9 +13,10 @@ const ActivitySchema = new mongoose.Schema(
     emissions: Number,
     date: Date,
     notes: String,
-    // createdBy: {
-    //   type: mongoose.Types.ObjectId
-    // }
+    createdBy: {
+      type: mongoose.Types.ObjectId,
+      ref: 'User'
+    }
 
   }, { timestamps: true }
 )

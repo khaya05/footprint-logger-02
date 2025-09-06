@@ -4,12 +4,14 @@ dotenv.config();
 import morgan from 'morgan'
 import express from "express";
 import mongoose from 'mongoose'
+import cookieParser from 'cookie-parser';
 const app = express()
 
 import userRouter from './routes/userRouter.js'
 import authRouter from './routes/authRouter.js'
 import activityRouter from './routes/activityRouter.js'
 import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js';
+import { authenticateUser } from './middleware/authMiddleware.js';
 
 // middleware
 app.use(errorHandlerMiddleware)
@@ -17,9 +19,10 @@ app.use(errorHandlerMiddleware)
 
 // routes
 app.use(express.json())
-app.use('/api/v1/users', userRouter)
-app.use('/api/v1/activities', activityRouter)
+app.use(cookieParser())
 app.use('/api/v1/auth', authRouter)
+app.use('/api/v1/users', authenticateUser, userRouter)
+app.use('/api/v1/activities', authenticateUser, activityRouter)
 
 // app.use('*', (req, res) => {
 //   res.status(404).json({ msg: 'not found' });

@@ -186,3 +186,26 @@ export const validateLoginUser = handleValidationErrors([
     .notEmpty()
     .withMessage('password is required!')
 ])
+
+export const validateUpdateUserInput = handleValidationErrors([
+  body('name')
+    .notEmpty()
+    .withMessage('name is required'),
+
+  body('lastName')
+    .notEmpty()
+    .withMessage('last name is required'),
+
+  body('email')
+    .notEmpty()
+    .withMessage('email is required')
+    .isEmail()
+    .withMessage('Invalid email')
+    .custom(async (email) => {
+      const user = await User.findOne({ email })
+
+      if (user) {
+        throw new BadRequestError('email already exist')
+      }
+    }),
+])

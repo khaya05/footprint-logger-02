@@ -4,7 +4,7 @@ import Activity from '../models/activityModel.js'
 import { asyncWrapper } from '../util/asyncWrapper.js';
 
 export const getAllActivities = asyncWrapper(async (req, res) => {
-  const activities = await Activity.find({})
+  const activities = await Activity.find({ createdBy: req.user.userId })
   res.status(StatusCodes.OK).json({ activities })
 })
 
@@ -17,7 +17,8 @@ export const getActivity = asyncWrapper(async (req, res) => {
 })
 
 export const createActivity = asyncWrapper(async (req, res) => {
-  const activity = await Activity.create({ ...req.body })
+  req.body.createdBy = req.user.userId
+  const activity = await Activity.create(req.body)
   res.status(StatusCodes.CREATED).json({ activity })
 })
 

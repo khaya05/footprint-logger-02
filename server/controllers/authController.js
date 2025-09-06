@@ -9,7 +9,7 @@ import { createToken } from "../util/tokenUtils.js";
 
 export const register = asyncWrapper(async (req, res) => {
   const hashedPassword = await hashPassword(req.body.password)
-  req.body.password = hashPassword
+  req.body.password = hashedPassword
   const user = await User.create(req.body);
   res.status(StatusCodes.CREATED).json({ user })
 
@@ -18,6 +18,7 @@ export const register = asyncWrapper(async (req, res) => {
 export const login = asyncWrapper(async (req, res) => {
   const { email, password } = req.body
   const user = await User.findOne({ email })
+
   const isValidUser = user && (await comparePassword(password, user.password))
 
   if (!isValidUser) throw new UnauthenticatedError('invalid credentials');
@@ -31,7 +32,13 @@ export const login = asyncWrapper(async (req, res) => {
     secure: process.env.NODE_ENV === 'production'
   })
 
-  res.send('token')
-
-
+  res.status(StatusCodes.OK).json({msg:'user logged in'})
 })
+
+export const logout = (req, res) => {
+  res.cookie('token', 'logout', {
+    httpOnly: true,
+    expires: new Date(Date.now()),
+  });
+  res.status(StatusCodes.OK).json({ msg: 'user logged out!' });
+};
