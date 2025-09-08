@@ -1,28 +1,26 @@
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useCallback,
-  useEffect,
-} from 'react';
+import React, { useEffect } from 'react';
+import {  useDispatch } from 'react-redux';
+import { removeToast } from '../features/toast/toastSlice';
 
-// Toast Context
-const ToastContext = createContext();
-
-const Toast = ({ id, type, message, onRemove }) => {
+const Toast = ({ id, type, message }) => {
+  const dispatch = useDispatch();
   const isSuccess = type === 'success';
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      onRemove(id);
+      dispatch(removeToast(id));
     }, 4000);
 
     return () => clearTimeout(timer);
-  }, [id, onRemove]);
+  }, [id, dispatch]);
+
+  const handleClose = () => {
+    dispatch(removeToast(id));
+  };
 
   return (
     <div
-      className={`flex items-center p-4 mb-3 rounded-lg shadow-lg ${
+      className={`flex items-center p-4 mb-3 rounded-lg shadow-lg transform transition-all duration-300 ease-in-out ${
         isSuccess
           ? 'bg-green-50 border-l-4 border-green-500 text-green-800'
           : 'bg-red-50 border-l-4 border-red-500 text-red-800'
@@ -47,11 +45,13 @@ const Toast = ({ id, type, message, onRemove }) => {
         </svg>
       )}
 
+      {/* Message */}
       <p className='text-sm font-medium flex-1'>{message}</p>
 
+      {/* Close Button */}
       <button
-        onClick={() => onRemove(id)}
-        className='ml-4 text-gray-400 hover:text-gray-600'
+        onClick={handleClose}
+        className='ml-4 text-gray-400 hover:text-gray-600 focus:outline-none'
       >
         <svg className='w-4 h-4' fill='currentColor' viewBox='0 0 20 20'>
           <path

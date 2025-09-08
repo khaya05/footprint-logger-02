@@ -1,8 +1,8 @@
 /* eslint-disable react-refresh/only-export-components */
-import { toast } from 'react-toastify';
 import { Logo, FormInputElement } from '../components';
 import customFetch from '../util/customFetch';
 import { redirect, useNavigation, Form, Link } from 'react-router-dom';
+import { toastService } from '../util/toastUtil';
 
 export const registerAction = async ({ request }) => {
   const formData = await request.formData();
@@ -10,24 +10,11 @@ export const registerAction = async ({ request }) => {
 
   try {
     await customFetch.post('/auth/register', data);
-    toast.success('Registration successful! Please log in.', {
-      position: 'top-right',
-      autoClose: 3000,
-    });
+    toastService.success('Registration successful! Please login');
     return redirect('/login');
   } catch (error) {
-    toast.error(
-      error?.response?.data?.msg || 'Registration failed. Please try again.',
-      {
-        position: 'top-right',
-        autoClose: 4000,
-      }
-    );
-
-    return {
-      error:
-        error?.response?.data?.msg || 'Registration failed. Please try again.',
-    };
+    toastService.error(error?.response?.data?.msg || 'Registration failed.');
+    return { error: error?.response?.data?.msg };
   }
 };
 

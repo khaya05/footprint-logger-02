@@ -1,9 +1,7 @@
-
 import { Logo, FormInputElement } from '../components';
 import customFetch from '../util/customFetch';
 import { redirect, useNavigation, Form, Link } from 'react-router-dom';
-import { showNotification } from '../store/uiSlice';
-import { store } from '../store/store.js';
+import { toastService } from '../util/toastUtil';
 
 export const LoginAction = async ({ request }) => {
   const formData = await request.formData();
@@ -11,21 +9,11 @@ export const LoginAction = async ({ request }) => {
 
   try {
     await customFetch.post('/auth/login', data);
-
-    // ✅ Trigger Redux notification
-    store.dispatch(
-      showNotification('success', 'Welcome back! Login successful.')
-    );
-
+    toastService.success('Logged in successfully');
     return redirect('/dashboard');
   } catch (error) {
-    const errorMsg =
-      error?.response?.data?.msg || 'Login failed. Please try again.';
-
-    // ✅ Trigger Redux notification
-    store.dispatch(showNotification('error', errorMsg));
-
-    return { error: errorMsg };
+    toastService.error(error?.response?.data?.msg || 'Registration failed.');
+    return { error: error?.response?.data?.msg };
   }
 };
 

@@ -12,6 +12,11 @@ import {
   Stats,
 } from './pages';
 import { registerAction } from './pages/Register';
+// import { LoginAction } from './pages/Login';
+import { store } from './store';
+import { Provider } from 'react-redux';
+import { ToastServiceConnector } from './components/ToastServiceConnector';
+import ToastContainer from './components/ToastContainer';
 import { LoginAction } from './pages/Login';
 
 const router = createBrowserRouter([
@@ -64,7 +69,13 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <Provider store={store}>
+      <ToastServiceConnector />
+      <RouterProvider router={router} />
+      <ToastContainer />
+    </Provider>
+  );
 };
 
 export default App;

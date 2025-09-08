@@ -8,7 +8,6 @@ export { default as Hero } from './Hero';
 export { default as Logo } from './Logo';
 export { default as LogoutBtn } from './LogoutBtn';
 export { default as Modal } from './Modal';
-export { default as Notification } from './Notification';
 export { default as ProfileBtn } from './ProfileBtn';
 export { default as SidebarPages } from './SidebarPages';
 export { default as SmallLogo } from './SmallLogo';

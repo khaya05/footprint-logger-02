@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
-import Toast from './Toast';
 
-const ToastContainer = () => {
-  const { toasts } = useContext(ToastContext);
+import Toast from './Toast';
+import { useSelector } from 'react-redux';
+
+export const ToastContainer = () => {
+  const toasts = useSelector((state) => state.toast?.toasts || []);
 
   if (toasts.length === 0) return null;
 
@@ -14,5 +15,6 @@ const ToastContainer = () => {
     </div>
   );
 };
+
 
 export default ToastContainer;
