@@ -11,6 +11,8 @@ import {
   Register,
   Stats,
 } from './pages';
+import { registerAction } from './pages/Register';
+import { LoginAction } from './pages/Login';
 
 const router = createBrowserRouter([
   {
@@ -24,10 +26,12 @@ const router = createBrowserRouter([
       {
         path: '/register',
         element: <Register />,
+        action: registerAction,
       },
       {
         path: '/Login',
         element: <Login />,
+        action: LoginAction,
       },
       {
         path: 'dashboard',

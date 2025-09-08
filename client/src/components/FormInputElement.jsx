@@ -4,8 +4,7 @@ const FormInputElement = ({
   type,
   error,
   placeholder,
-  value,
-  onChange,
+  defaultValue,
 }) => {
   return (
     <div className='w-full mt-2'>
@@ -20,9 +19,8 @@ const FormInputElement = ({
         id={name}
         name={name}
         placeholder={placeholder}
+        defaultValue={defaultValue || ''}
         required={true}
-        value={value || ''}
-        onChange={onChange}
         className='block h-10 w-[100%] px-3 mt-1 border border-gray-300 rounded-md focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500'
       />
       {error && <span className='text-red-500 text-xs mt-1'>{error}</span>}

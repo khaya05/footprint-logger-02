@@ -1,7 +1,6 @@
 import { useNavigation } from 'react-router-dom';
 
-// eslint-disable-next-line no-unused-vars
-const SubmitBtn = ({ formBtn }) => {
+const SubmitBtn = () => {
   const navigation = useNavigation();
   const isSubmitting = navigation.state === 'submitting';
 

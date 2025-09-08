@@ -14,19 +14,21 @@ import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js';
 import { authenticateUser } from './middleware/authMiddleware.js';
 
 // middleware
-app.use(errorHandlerMiddleware)
+app.use(express.json())
+app.use(cookieParser())
 
 
 // routes
-app.use(express.json())
-app.use(cookieParser())
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/users', authenticateUser, userRouter)
 app.use('/api/v1/activities', authenticateUser, activityRouter)
 
-// app.use('*', (req, res) => {
-//   res.status(404).json({ msg: 'not found' });
-// });
+app.use('*', (req, res) => {
+  res.status(404).json({ msg: 'Route not found' });
+});
+
+// error handler
+app.use(errorHandlerMiddleware)
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
