@@ -7,7 +7,7 @@ const SmallNavbar = () => {
   const { showModal, setShowModal, currentTab } = useDashboardContext();
 
   return (
-    <nav className='md:hidden border-b border-gray-300 flex items-center justify-between p-2 bg-white'>
+    <nav className='w-full z-3 shadow-xl md:hidden border-b border-gray-300 flex items-center justify-between p-2 bg-white'>
       <div className=' flex items-center justify-between gap-2'>
         <SmallLogo />
         <h3>{currentTab}</h3>

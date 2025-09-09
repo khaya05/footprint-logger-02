@@ -6,7 +6,7 @@ import { FaEyeSlash } from 'react-icons/fa';
 const BigSidebar = () => {
   const { setShowSidebar } = useDashboardContext();
   return (
-    <aside className='hidden bg-white w-[300px] absolute top-0 h-[100vh] border-r border-gray-200 p-6 md:flex md:flex-col items-start justify-between'>
+    <aside className='hidden bg-white w-[300px] absolute top-0 h-[100vh] border-r border-gray-200 p-6 md:fixed md:flex md:flex-col items-start justify-between'>
       <div className='w-full'>
         <Logo />
         <br />

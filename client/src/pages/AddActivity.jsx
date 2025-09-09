@@ -1,7 +1,9 @@
 import { Form } from 'react-router-dom';
-import { FormInputElement, FormSelectElement, SubmitBtn } from '../components';
+import { ActivityInput, ActivitySelect } from '../components';
 import { CATEGORIES, EMISSION_FACTORS } from '../util/emissionFactors';
 import { useState } from 'react';
+import customFetch from '../util/customFetch';
+import { toastService } from '../util/toastUtil';
 
 const AddActivity = () => {
   const [formData, setFormData] = useState({
@@ -12,8 +14,9 @@ const AddActivity = () => {
     date: new Date().toISOString().split('T')[0],
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const [errors, setErrors] = useState({});
-  const [_, setActivities] = useState([]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -76,31 +79,39 @@ const AddActivity = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!validateForm()) return;
+    try {
+      const newActivity = {
+        ...formData,
+        amount: parseFloat(formData.amount),
+        emissions: parseFloat(calculateEmissions()),
+        unit: getActivityDetails()?.unit || '',
+        timestamp: new Date().toISOString(),
+      };
 
-    const newActivity = {
-      // id: Date.now().toString(),
-      ...formData,
-      amount: parseFloat(formData.amount),
-      emissions: parseFloat(calculateEmissions()),
-      unit: getActivityDetails()?.unit || '',
-      timestamp: new Date().toISOString(),
-    };
+      setIsSubmitting(true);
+      await customFetch.post('/activities', newActivity);
+      toastService.success('activity added successfully');
+      setIsSubmitting(false);
 
-    setActivities((prev) => [...prev, newActivity]);
-
-    setFormData({
-      category: '',
-      activity: '',
-      amount: '',
-      notes: '',
-      date: new Date().toISOString().split('T')[0],
-    });
-
-    alert(`Activity added! Emissions: ${newActivity.emissions} kg CO2`);
+      setTimeout(() => {
+        setFormData({
+          category: '',
+          activity: '',
+          amount: '',
+          notes: '',
+          date: new Date().toISOString().split('T')[0],
+        });
+      }, 4000);
+      
+    } catch (error) {
+      toastService.error(
+        error?.response?.data?.msg || 'Failed to add activity failed.'
+      );
+      console.error(error);
+    }
   };
 
   const activityDetails = getActivityDetails();
@@ -109,17 +120,15 @@ const AddActivity = () => {
   return (
     <div className='max-w-2xl mx-auto p-6 bg-white rounded shadow-2xl'>
       <div className='mb-8'>
-        <h4 className='text-4xl  text-gray-900 mb-2'>
-          Add Carbon Activity
-        </h4>
+        <h4 className='text-4xl  text-gray-900 mb-2'>Add Carbon Activity</h4>
         <p className='text-gray-600'>
           Track your daily activities and their environmental impact
         </p>
       </div>
 
-      <div className='space-y-4'>
+      <Form method='post' className='space-y-4'>
         <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-          <FormSelectElement
+          <ActivitySelect
             name='category'
             options={CATEGORIES}
             value={formData.category}
@@ -128,7 +137,7 @@ const AddActivity = () => {
             placeholder='Choose category...'
           />
 
-          <FormInputElement
+          <ActivityInput
             name='date'
             label='Date'
             type='date'
@@ -139,7 +148,7 @@ const AddActivity = () => {
         </div>
 
         {formData.category && (
-          <FormSelectElement
+          <ActivitySelect
             name='activity'
             options={getActivityOptions()}
             value={formData.activity}
@@ -161,7 +170,7 @@ const AddActivity = () => {
         )}
 
         {formData.activity && (
-          <FormInputElement
+          <ActivityInput
             name='amount'
             label={`Amount (${activityDetails?.unit || 'units'})`}
             type='number'
@@ -200,11 +209,13 @@ const AddActivity = () => {
 
         <button
           onClick={handleSubmit}
-          className='w-full bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition duration-200 font-medium'
+          className={`w-full ${
+            isSubmitting ? 'bg-green-600 cursor-not-allowed' : 'bg-green-500'
+          } text-white py-3 px-4 rounded-lg hover:bg-green-700 hover:curso-pointer focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition duration-200 font-medium`}
         >
-          Add Activity
+          {`${isSubmitting ? 'Adding Activity' : 'Add Activity'}`}
         </button>
-      </div>
+      </Form>
     </div>
   );
 };

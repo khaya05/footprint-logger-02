@@ -18,6 +18,9 @@ import { Provider } from 'react-redux';
 import { ToastServiceConnector } from './components/ToastServiceConnector';
 import ToastContainer from './components/ToastContainer';
 import { LoginAction } from './pages/Login';
+import { dashboardLoader } from './pages/DashboardLayout';
+import { updateProfileAction } from './pages/Profile';
+import { activitiesLoader } from './pages/AllActivities';
 
 const router = createBrowserRouter([
   {
@@ -41,6 +44,7 @@ const router = createBrowserRouter([
       {
         path: 'dashboard',
         element: <DashboardLayout />,
+        loader: dashboardLoader,
         children: [
           {
             index: true,
@@ -49,10 +53,12 @@ const router = createBrowserRouter([
           {
             path: 'activities',
             element: <AllActivities />,
+            loader: activitiesLoader,
           },
           {
             path: 'profile',
             element: <Profile />,
+            action: updateProfileAction,
           },
           {
             path: 'add-activity',

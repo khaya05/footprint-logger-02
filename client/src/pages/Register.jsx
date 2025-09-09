@@ -7,6 +7,11 @@ import { toastService } from '../util/toastUtil';
 export const registerAction = async ({ request }) => {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
+  const { password, confirmPassword } = data;
+
+  if (password !== confirmPassword) {
+    return toastService.error("Passwords don't match");
+  }
 
   try {
     await customFetch.post('/auth/register', data);

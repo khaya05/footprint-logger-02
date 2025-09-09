@@ -80,8 +80,8 @@ export const EMISSION_FACTORS = {
 };
 
 export const CATEGORIES = [
-  { value: 'transport', label: 'Transportation' },
-  { value: 'food', label: 'Food & Drinks' },
-  { value: 'energy', label: 'Energy & Utilities' },
-  { value: 'digital', label: 'Digital Usage' },
+  { value: 'transport', label: 'Transportation', icon: '🚗', color: 'bg-blue-100 text-blue-800' },
+  { value: 'food', label: 'Food & Drinks', icon: '🍽️', color: 'bg-green-100 text-green-800' },
+  { value: 'energy', label: 'Energy & Utilities', icon: '⚡', color: 'bg-yellow-100 text-yellow-800' },
+  { value: 'digital', label: 'Digital Usage', icon: '💻', color: 'bg-purple-100 text-purple-800' },
 ];

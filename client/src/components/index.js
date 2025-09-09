@@ -1,3 +1,6 @@
+export { default as ActivityCard } from './ActivityCard';
+export { default as ActivityInput } from './ActivityInput';
+export { default as ActivitySelect } from './ActivitySelect';
 export { default as BigNavbar } from './BigNavbar';
 export { default as BigSidebar } from './BigSidebar';
 export { default as BigSidebarBtn } from './BigSidebarBtn';
@@ -9,6 +12,7 @@ export { default as Logo } from './Logo';
 export { default as LogoutBtn } from './LogoutBtn';
 export { default as Modal } from './Modal';
 export { default as ProfileBtn } from './ProfileBtn';
+export { default as SearchActivity } from './SearchActivity';
 export { default as SidebarPages } from './SidebarPages';
 export { default as SmallLogo } from './SmallLogo';
 export { default as SmallNavbar } from './SmallNavbar';
