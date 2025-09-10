@@ -1,10 +1,12 @@
 export { default as ActivityCard } from './ActivityCard';
+export { default as ActivityForm } from './ActivityForm';
 export { default as ActivityInput } from './ActivityInput';
 export { default as ActivitySelect } from './ActivitySelect';
 export { default as BigNavbar } from './BigNavbar';
 export { default as BigSidebar } from './BigSidebar';
 export { default as BigSidebarBtn } from './BigSidebarBtn';
 export { default as CustomLink } from './CustomLink';
+export { default as DeleteConfirmation } from './DeleteConfirmation';
 export { default as FormInputElement } from './FormInputElement';
 export { default as FormSelectElement } from './FormSelectElement';
 export { default as Hero } from './Hero';

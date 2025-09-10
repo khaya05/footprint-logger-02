@@ -7,7 +7,6 @@ import { toastService } from '../util/toastUtil';
 export const activitiesLoader = async () => {
   try {
     const { data } = await customFetch('/activities');
-    console.log({ data });
     return { data };
   } catch (error) {
     toastService.error(
@@ -21,7 +20,7 @@ const AllActivities = () => {
   return (
     <div>
       <SearchActivity />
-      <div className='flex flex-col md:grid grid-cols-2 gap-2 lg:grid-cols-3'>
+      <div className='flex flex-col md:grid grid-cols-2 gap-2 lg:grid-cols-3 lg:gap-4'>
         {data?.activities?.map((activity) => (
           <ActivityCard key={activity._id} activity={activity} />
         ))}

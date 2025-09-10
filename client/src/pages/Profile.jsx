@@ -6,15 +6,26 @@ import customFetch from '../util/customFetch';
 import { toastService } from '../util/toastUtil';
 
 export const updateProfileAction = async ({ request }) => {
-  const formData = request.formData();
-  const data = Object.fromEntries(formData);
+  const formData = await request.formData();
+  const newValues = Object.fromEntries(formData);
+  const { data } = await customFetch.get('/users/current-user');
+
+  const currentUser = data.user;
+  const hasChanges = Object.keys(newValues).some(
+    (key) => newValues[key] !== currentUser[key]
+  );
+
+  if (!hasChanges) {
+    toastService.success('No changes made!');
+    return redirect('/dashboard');
+  }
 
   try {
-    await customFetch.post('/users/update-user', data);
+    await customFetch.post('/users/update-user', newValues);
     toastService.success('Profile updated!');
     return redirect('/dashboard');
   } catch (error) {
-    toastService.error(error?.response?.data?.msg || 'Registration failed.');
+    toastService.error(error?.response?.data?.msg || 'Update failed.');
     return { error: error?.response?.data?.msg };
   }
 };
@@ -28,7 +39,9 @@ const Profile = () => {
   return (
     <div className='outlet'>
       <Form method='post'>
-        <h4>Profile</h4>
+        <h4 className='text-xl font-semibold text-gray-900 capitalize'>
+          Profile
+        </h4>
         <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4'>
           <FormInputElement
             name='name'
@@ -37,7 +50,7 @@ const Profile = () => {
             defaultValue={name}
           />
           <FormInputElement
-            name='lastname'
+            name='lastName'
             label='Last name'
             value='marshal'
             defaultValue={lastName}

@@ -10,7 +10,7 @@ export const getAllActivities = asyncWrapper(async (req, res) => {
 
 export const getActivity = asyncWrapper(async (req, res) => {
   const { id } = req.params;
-  const activity = await Activity.findById(id)
+  const activity = await Activity.findById(id).select('-createdAt -updatedAt -createdBy -_v')
 
   if (!activity) throw new NotFoundError(`no activity with id: ${id}`)
   res.status(StatusCodes.OK).json({ activity })

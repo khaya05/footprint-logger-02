@@ -4,6 +4,7 @@ import {
   BigNavbar,
   BigSidebar,
   BigSidebarBtn,
+  DeleteConfirmation,
   Modal,
   SmallNavbar,
   SmallSidebar,
@@ -33,6 +34,8 @@ const DashboardLayout = () => {
   const [showModal, setShowModal] = useState(false);
   const [showSidebar, setShowSidebar] = useState(true);
   const [currentTab, setCurrentTab] = useState('');
+  const [deleteId, setDeleteId] = useState('');
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
   return (
     <DashboardContext.Provider
@@ -41,9 +44,13 @@ const DashboardLayout = () => {
         showModal,
         showSidebar,
         currentTab,
+        deleteId,
+        showConfirmDelete,
         setShowModal,
         setShowSidebar,
         setCurrentTab,
+        setDeleteId,
+        setShowConfirmDelete,
       }}
     >
       <div className='dashboard-layout bg-green-100'>
@@ -53,9 +60,12 @@ const DashboardLayout = () => {
         <BigNavbar />
         {showSidebar && <BigSidebar />}
         {!showSidebar && <BigSidebarBtn />}
+        {showConfirmDelete && <DeleteConfirmation />}
         <div
           className={`bg-green-100 pt-10 px-4 transition-all duration-300 pb-8 ${
-            showSidebar ? 'md:translate-x-[300px] md:w-[calc(100vw-300px-1rem)]' : ''
+            showSidebar
+              ? 'md:translate-x-[300px] md:w-[calc(100vw-300px-1rem)]'
+              : ''
           }`}
         >
           <Outlet context={{ user }} />

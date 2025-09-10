@@ -85,3 +85,25 @@ export const CATEGORIES = [
   { value: 'energy', label: 'Energy & Utilities', icon: '⚡', color: 'bg-yellow-100 text-yellow-800' },
   { value: 'digital', label: 'Digital Usage', icon: '💻', color: 'bg-purple-100 text-purple-800' },
 ];
+
+export const getActivityOptions = (formData) => {
+  return Object.keys(EMISSION_FACTORS[formData.category] || {}).map(
+    (activity) => ({
+      value: activity,
+      label: activity,
+    })
+  );
+};
+
+export const getActivityDetails = (formData) => {
+  if (!formData.category || !formData.activity) return null;
+  return EMISSION_FACTORS[formData.category][formData.activity];
+};
+
+export const calculateEmissions = (formData) => {
+  const details = getActivityDetails(formData);
+  if (!details || !formData.amount) return 0;
+
+  const amount = parseFloat(formData.amount);
+  return (amount * details.factor).toFixed(3);
+};

@@ -4,6 +4,7 @@ import {
   AllActivities,
   DashboardLayout,
   DashboardStats,
+  EditActivity,
   HomeLayout,
   Landing,
   Login,
@@ -12,7 +13,6 @@ import {
   Stats,
 } from './pages';
 import { registerAction } from './pages/Register';
-// import { LoginAction } from './pages/Login';
 import { store } from './store';
 import { Provider } from 'react-redux';
 import { ToastServiceConnector } from './components/ToastServiceConnector';
@@ -21,6 +21,7 @@ import { LoginAction } from './pages/Login';
 import { dashboardLoader } from './pages/DashboardLayout';
 import { updateProfileAction } from './pages/Profile';
 import { activitiesLoader } from './pages/AllActivities';
+import { editActivityLoader } from './pages/EditActivity';
 
 const router = createBrowserRouter([
   {
@@ -65,8 +66,13 @@ const router = createBrowserRouter([
             element: <AddActivity />,
           },
           {
-            path: 'Stats',
+            path: 'stats',
             element: <Stats />,
+          },
+          {
+            path: 'edit-activity/:id',
+            element: <EditActivity />,
+            loader: editActivityLoader,
           },
         ],
       },
