@@ -1,14 +1,14 @@
 import { Form } from 'react-router-dom';
-import { ActivityInput, ActivitySelect } from '../components';
+import { ActivityInput, ActivitySelect } from '..';
 import {
   calculateEmissions,
   CATEGORIES,
   getActivityDetails,
   getActivityOptions,
-} from '../util/emissionFactors';
+} from '../../util/emissionFactors';
 import { useState, useEffect } from 'react';
-import customFetch from '../util/customFetch';
-import { toastService } from '../util/toastUtil';
+import customFetch from '../../util/customFetch';
+import { toastService } from '../../util/toastUtil';
 
 const ActivityForm = ({
   isEdit = false,
@@ -127,7 +127,7 @@ const ActivityForm = ({
       console.error(error);
     }
   };
-
+  
   const activityDetails = getActivityDetails(formData);
   const estimatedEmissions = calculateEmissions(formData);
 

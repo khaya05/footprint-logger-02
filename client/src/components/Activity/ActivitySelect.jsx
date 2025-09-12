@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const ActivitySelect = ({
   name,
@@ -9,6 +9,7 @@ const ActivitySelect = ({
   error,
   placeholder = 'Select...',
 }) => {
+  
   return (
     <div className='w-full mt-2'>
       <label
@@ -37,4 +38,4 @@ const ActivitySelect = ({
   );
 };
 
-export default ActivitySelect
+export default ActivitySelect;

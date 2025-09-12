@@ -105,30 +105,28 @@ export const validateGetActivity = handleValidationErrors([
 
 export const validateActivityQuery = handleValidationErrors([
   query('category')
-    .optional()
-    .isIn(CATEGORY_TYPES)
-    .withMessage('Category must be one of: transport, food, energy, digital'),
+    .optional({ values: 'falsy' }) 
+    .isIn(['all', ...CATEGORY_TYPES])
+    .withMessage('Category must be one of: transport, food, energy, digital, all'),
 
-  query('startDate')
-    .optional()
-    .isISO8601()
-    .withMessage('Start date must be a valid ISO 8601 date')
-    .toDate(),
+  query('search')
+    .optional({ values: 'falsy' }) 
+    .isLength({ min: 1, max: 100 })
+    .withMessage('Search term must be between 1 and 100 characters'),
 
-  query('endDate')
-    .optional()
-    .isISO8601()
-    .withMessage('End date must be a valid ISO 8601 date')
-    .toDate(),
+  query('sort')
+    .optional({ values: 'falsy' }) 
+    .isIn(['newest', 'oldest', 'highest', 'lowest', 'a-z', 'z-a'])
+    .withMessage('Invalid sort option'),
 
   query('page')
-    .optional()
+    .optional({ values: 'falsy' })
     .isInt({ min: 1 })
     .withMessage('Page must be a positive integer')
     .toInt(),
 
   query('limit')
-    .optional()
+    .optional({ values: 'falsy' })
     .isInt({ min: 1, max: 100 })
     .withMessage('Limit must be between 1 and 100')
     .toInt()

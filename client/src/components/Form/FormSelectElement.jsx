@@ -4,6 +4,8 @@ const FormSelectElement = ({
   options,
   error,
   placeholder = 'Select...',
+  required,
+  onChange
 }) => {
   return (
     <div className='w-full mt-2'>
@@ -16,7 +18,8 @@ const FormSelectElement = ({
       <select
         id={name}
         name={name}
-        required={true}
+        required={required}
+        onChange={onChange}
         className='block h-10 w-[100%] px-3 mt-1 border border-gray-300 rounded-md focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500 bg-white'
       >
         <option value=''>{placeholder}</option>

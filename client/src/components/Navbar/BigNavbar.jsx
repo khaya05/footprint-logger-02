@@ -1,6 +1,5 @@
-import { useDashboardContext } from '../pages/DashboardLayout';
-import Logo from './Logo';
-import ProfileBtn from './ProfileBtn';
+import { useDashboardContext } from '../../pages/DashboardLayout';
+import { ProfileBtn, Logo } from '..';
 
 const BigNavbar = () => {
   const { currentTab, showSidebar } = useDashboardContext();

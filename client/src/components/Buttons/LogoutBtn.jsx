@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import customFetch from '../util/customFetch';
-import { toastService } from '../util/toastUtil';
+import customFetch from '../../util/customFetch';
+import { toastService } from '../../util/toastUtil';
 
 const LogoutBtn = () => {
   const navigate = useNavigate();

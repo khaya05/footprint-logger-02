@@ -12,7 +12,7 @@ export const LoginAction = async ({ request }) => {
     toastService.success('Logged in successfully');
     return redirect('/dashboard');
   } catch (error) {
-    toastService.error(error?.response?.data?.msg || 'Registration failed.');
+    toastService.error(error?.response?.data?.msg || 'Login failed.');
     return { error: error?.response?.data?.msg };
   }
 };

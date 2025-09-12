@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import { useDashboardContext } from '../pages/DashboardLayout';
-import customFetch from '../util/customFetch';
-import { toastService } from '../util/toastUtil';
+import { useDashboardContext } from '../../pages/DashboardLayout';
+import customFetch from '../../util/customFetch';
+import { toastService } from '../../util/toastUtil';
 
 const DeleteConfirmation = () => {
   const { setShowConfirmDelete, deleteId, setDeleteId } = useDashboardContext();
@@ -15,7 +15,7 @@ const DeleteConfirmation = () => {
       navigate('/dashboard');
     } catch (error) {
       toastService.error(
-        error?.response?.data?.msg || 'Failed to fetch activities'
+        error?.response?.data?.msg || 'Failed to delete activity'
       );
     }
   };

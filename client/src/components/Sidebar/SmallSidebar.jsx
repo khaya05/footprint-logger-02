@@ -1,5 +1,4 @@
-
-import { LogoutBtn, SidebarPages } from '.';
+import { LogoutBtn, SidebarPages } from '..';
 
 const SmallSidebar = () => {
   return (

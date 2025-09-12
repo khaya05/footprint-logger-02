@@ -4,9 +4,54 @@ import Activity from '../models/activityModel.js'
 import { asyncWrapper } from '../util/asyncWrapper.js';
 
 export const getAllActivities = asyncWrapper(async (req, res) => {
-  const activities = await Activity.find({ createdBy: req.user.userId })
-  res.status(StatusCodes.OK).json({ activities })
-})
+  const { search, category, sort } = req.query;
+
+  const queryObj = {
+    createdBy: req.user.userId
+  };
+
+  if (search) {
+    queryObj.$or = [
+      { activity: { $regex: search, $options: 'i' } },
+      { notes: { $regex: search, $options: 'i' } }
+    ];
+  }
+
+  if (category && category !== 'all') {
+    queryObj.category = category;
+  }
+
+  const sortOptions = {
+    newest: '-date',
+    oldest: 'date',
+    highest: '-emissions',
+    lowest: 'emissions',
+    'a-z': 'activity',        
+    'z-a': '-activity',
+  };
+
+  const sortKey = sortOptions[sort] || sortOptions.newest;
+
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 12;
+  const skip = (page - 1) * limit;
+
+  const activities = await Activity.find(queryObj)
+    .select('-createdBy -createdAt -updatedAt -__v') 
+    .sort(sortKey)
+    .skip(skip)
+    .limit(limit);
+
+  const totalActivities = await Activity.countDocuments(queryObj);
+  const pages = Math.ceil(totalActivities / limit);
+
+  res.status(StatusCodes.OK).json({
+    totalActivities, 
+    pages, 
+    currentPage: page,
+    activities 
+  });
+});
 
 export const getActivity = asyncWrapper(async (req, res) => {
   const { id } = req.params;

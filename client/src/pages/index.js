@@ -1,7 +1,6 @@
 export { default as AddActivity } from './AddActivity';
 export { default as AllActivities } from './AllActivities';
 export { default as DashboardLayout } from './DashboardLayout';
-export { default as DashboardStats } from './DashboardStats';
 export { default as EditActivity } from './EditActivity';
 export { default as HomeLayout } from './HomeLayout';
 export { default as Landing } from './Landing';

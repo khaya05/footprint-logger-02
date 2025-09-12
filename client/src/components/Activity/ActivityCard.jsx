@@ -8,13 +8,11 @@ import {
   FaFileAlt,
 } from 'react-icons/fa';
 import { FaBoltLightning } from 'react-icons/fa6';
-import { CATEGORIES } from '../util/emissionFactors';
-import { useDashboardContext } from '../pages/DashboardLayout';
-import DeleteConfirmation from './DeleteConfirmation';
+import { CATEGORIES } from '../../util/emissionFactors';
+import { useDashboardContext } from '../../pages/DashboardLayout';
 
 const ActivityCard = ({ activity }) => {
-  const {setDeleteId, setShowConfirmDelete } =
-    useDashboardContext();
+  const { setDeleteId, setShowConfirmDelete } = useDashboardContext();
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-US', {

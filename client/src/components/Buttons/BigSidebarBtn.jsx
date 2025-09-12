@@ -1,5 +1,5 @@
 import { FaEye } from 'react-icons/fa';
-import { useDashboardContext } from '../pages/DashboardLayout';
+import { useDashboardContext } from '../../pages/DashboardLayout';
 
 const BigSidebarBtn = () => {
   const { setShowSidebar } = useDashboardContext();

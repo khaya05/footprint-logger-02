@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import {  useDispatch } from 'react-redux';
-import { removeToast } from '../features/toast/toastSlice';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { removeToast } from '../../features/toast/toastSlice';
 
 const Toast = ({ id, type, message }) => {
   const dispatch = useDispatch();
@@ -26,7 +26,6 @@ const Toast = ({ id, type, message }) => {
           : 'bg-red-50 border-l-4 border-red-500 text-red-800'
       }`}
     >
-      {/* Icon */}
       {isSuccess ? (
         <svg className='w-5 h-5 mr-3' fill='currentColor' viewBox='0 0 20 20'>
           <path
@@ -45,10 +44,8 @@ const Toast = ({ id, type, message }) => {
         </svg>
       )}
 
-      {/* Message */}
       <p className='text-sm font-medium flex-1'>{message}</p>
 
-      {/* Close Button */}
       <button
         onClick={handleClose}
         className='ml-4 text-gray-400 hover:text-gray-600 focus:outline-none'

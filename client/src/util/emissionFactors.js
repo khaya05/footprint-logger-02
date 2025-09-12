@@ -80,19 +80,37 @@ export const EMISSION_FACTORS = {
 };
 
 export const CATEGORIES = [
-  { value: 'transport', label: 'Transportation', icon: '🚗', color: 'bg-blue-100 text-blue-800' },
-  { value: 'food', label: 'Food & Drinks', icon: '🍽️', color: 'bg-green-100 text-green-800' },
-  { value: 'energy', label: 'Energy & Utilities', icon: '⚡', color: 'bg-yellow-100 text-yellow-800' },
-  { value: 'digital', label: 'Digital Usage', icon: '💻', color: 'bg-purple-100 text-purple-800' },
+  {
+    value: 'transport',
+    label: 'Transportation',
+    icon: '🚗',
+    color: 'bg-blue-100 text-blue-800',
+  },
+  {
+    value: 'food',
+    label: 'Food & Drinks',
+    icon: '🍽️',
+    color: 'bg-green-100 text-green-800',
+  },
+  {
+    value: 'energy',
+    label: 'Energy & Utilities',
+    icon: '⚡',
+    color: 'bg-yellow-100 text-yellow-800',
+  },
+  {
+    value: 'digital',
+    label: 'Digital Usage',
+    icon: '💻',
+    color: 'bg-purple-100 text-purple-800',
+  },
 ];
 
 export const getActivityOptions = (formData) => {
-  return Object.keys(EMISSION_FACTORS[formData.category] || {}).map(
-    (activity) => ({
-      value: activity,
-      label: activity,
-    })
-  );
+  return Object.keys(EMISSION_FACTORS[formData.category] || {}).map((activity) => ({
+    value: activity,
+    label: activity,
+  }));
 };
 
 export const getActivityDetails = (formData) => {
@@ -107,3 +125,12 @@ export const calculateEmissions = (formData) => {
   const amount = parseFloat(formData.amount);
   return (amount * details.factor).toFixed(3);
 };
+
+export const SORT_OPTIONS = [
+  { value: 'newest', label: 'NEWEST_FIRST' },
+  { value: 'oldest', label: 'OLDEST_FIRST' },
+  { value: 'a-z', label: 'ASCENDING' },
+  { value: 'z-a', label: 'DESCENDING' },
+  { value: 'highest', label: 'HIGH_EMISSIONS' },
+  { value: 'lowest', label: 'LOW_EMISSIONS' },
+];

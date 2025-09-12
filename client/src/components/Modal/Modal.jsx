@@ -1,5 +1,4 @@
-import React from 'react';
-import { useDashboardContext } from '../pages/DashboardLayout';
+import { useDashboardContext } from '../../pages/DashboardLayout';
 
 const Modal = () => {
   const { setShowModal } = useDashboardContext();

@@ -1,6 +1,5 @@
-import { LogoutBtn, SidebarPages } from '.';
-import { useDashboardContext } from '../pages/DashboardLayout';
-import Logo from './Logo';
+import { Logo, LogoutBtn, SidebarPages } from '..';
+import { useDashboardContext } from '../../pages/DashboardLayout';
 import { FaEyeSlash } from 'react-icons/fa';
 
 const BigSidebar = () => {

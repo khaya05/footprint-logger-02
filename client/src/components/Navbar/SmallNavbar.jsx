@@ -1,7 +1,6 @@
-import SmallLogo from './SmallLogo';
+import { ProfileBtn, SmallLogo } from '..';
 import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
-import { useDashboardContext } from '../pages/DashboardLayout';
-import ProfileBtn from './ProfileBtn';
+import { useDashboardContext } from '../../pages/DashboardLayout';
 
 const SmallNavbar = () => {
   const { showModal, setShowModal, currentTab } = useDashboardContext();

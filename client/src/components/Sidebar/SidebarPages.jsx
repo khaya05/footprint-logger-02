@@ -1,23 +1,23 @@
 import { NavLink } from 'react-router-dom';
-import { useDashboardContext } from '../pages/DashboardLayout';
+import { useDashboardContext } from '../../pages/DashboardLayout';
 import { CgProfile } from 'react-icons/cg';
 import { FaChartBar, FaList, FaRegCalendarPlus } from 'react-icons/fa';
 
 const sidebarPages = [
   {
-    page: 'Stats',
+    page: 'Dashboard',
     icon: <FaChartBar />,
-    path: 'stats',
-  },
-  {
-    page: 'Add Activity',
-    icon: <FaRegCalendarPlus />,
-    path: 'add-activity',
+    path: '/dashboard',
   },
   {
     page: 'Activities',
     icon: <FaList />,
     path: 'activities',
+  },
+  {
+    page: 'Add Activity',
+    icon: <FaRegCalendarPlus />,
+    path: 'add-activity',
   },
   {
     page: 'Profile',

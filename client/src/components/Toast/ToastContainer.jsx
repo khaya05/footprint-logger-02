@@ -1,4 +1,3 @@
-
 import Toast from './Toast';
 import { useSelector } from 'react-redux';
 
@@ -15,6 +14,5 @@ export const ToastContainer = () => {
     </div>
   );
 };
-
 
 export default ToastContainer;

@@ -1,6 +1,5 @@
-import { Link } from 'react-router-dom';
-import CustomLink from './CustomLink';
-import heroImg from '../images/undraw_eco-conscious_oqny.svg';
+import { CustomLink } from '..';
+import heroImg from '../../images/undraw_eco-conscious_oqny.svg';
 
 const Hero = () => {
   return (
