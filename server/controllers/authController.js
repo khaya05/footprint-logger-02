@@ -1,39 +1,36 @@
-import { asyncWrapper } from "../util/asyncWrapper.js";
-import User from '../models/userModel.js'
-import { StatusCodes } from "http-status-codes";
-import { comparePassword, hashPassword } from "../util/passwordUtil.js";
-import { UnauthenticatedError } from "../errors/customErrors.js";
-import { createToken } from "../util/tokenUtils.js";
-
-
+import { asyncWrapper } from '../util/asyncWrapper.js';
+import User from '../models/userModel.js';
+import { StatusCodes } from 'http-status-codes';
+import { comparePassword, hashPassword } from '../util/passwordUtil.js';
+import { UnauthenticatedError } from '../errors/customErrors.js';
+import { createToken } from '../util/tokenUtils.js';
 
 export const register = asyncWrapper(async (req, res) => {
-  const hashedPassword = await hashPassword(req.body.password)
-  req.body.password = hashedPassword
+  const hashedPassword = await hashPassword(req.body.password);
+  req.body.password = hashedPassword;
   const user = await User.create(req.body);
-  res.status(StatusCodes.CREATED).json({ user })
-
-})
+  res.status(StatusCodes.CREATED).json({ user });
+});
 
 export const login = asyncWrapper(async (req, res, next) => {
-  const { email, password } = req.body
-  const user = await User.findOne({ email })
+  const { email, password } = req.body;
+  const user = await User.findOne({ email });
 
-  const isValidUser = user && (await comparePassword(password, user.password))
+  const isValidUser = user && (await comparePassword(password, user.password));
 
   if (!isValidUser) throw new UnauthenticatedError('invalid credentials');
 
-  const token = createToken({ userId: user._id, role: user.role })
+  const token = createToken({ userId: user._id, role: user.role });
   const oneDay = 1000 * 60 * 60 * 24;
 
   res.cookie('token', token, {
     httpOnly: true,
     expires: new Date(Date.now() + oneDay),
-    secure: process.env.NODE_ENV === 'production'
-  })
+    secure: process.env.NODE_ENV === 'production',
+  });
 
-  res.status(StatusCodes.OK).json({msg:'user logged in'})
-})
+  res.status(StatusCodes.OK).json({ msg: 'user logged in' });
+});
 
 export const logout = (req, res) => {
   res.cookie('token', 'logout', {
