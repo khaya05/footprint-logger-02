@@ -4,7 +4,8 @@ import customFetch from '../../util/customFetch';
 import { toastService } from '../../util/toastUtil';
 
 const DeleteConfirmation = () => {
-  const { setShowConfirmDelete, deleteId, setDeleteId } = useDashboardContext();
+  const { setShowConfirmDelete, deleteId, setDeleteId, setCurrentTab } =
+    useDashboardContext();
   const navigate = useNavigate();
 
   const onConfirm = async () => {
@@ -23,6 +24,7 @@ const DeleteConfirmation = () => {
   function onCancel() {
     setShowConfirmDelete(false);
     setDeleteId('');
+    setCurrentTab('Dashboard');
   }
 
   return (

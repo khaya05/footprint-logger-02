@@ -7,9 +7,9 @@ import { toastService } from '../util/toastUtil';
 export const registerAction = async ({ request }) => {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
-  const { password, confirmPassword } = data;
+  const { password, passwordConfirm } = data;
 
-  if (password !== confirmPassword) {
+  if (password !== passwordConfirm) {
     return toastService.error("Passwords don't match");
   }
 
@@ -33,34 +33,30 @@ const Register = () => {
         <Logo />
         <h2>Register</h2>
         <Form method='post' className='w-full'>
-          <FormInputElement
-            name='name'
-            placeholder='e.g Tommy'
-            defaultValue='tommy'
-          />
+          <FormInputElement name='name' placeholder='e.g Tommy' required />
           <FormInputElement
             name='lastName'
             label='last name'
             placeholder='e.g smith'
-            defaultValue='smith'
+            required
           />
           <FormInputElement
             name='email'
             placeholder='e.g tommy@email.com'
-            defaultValue='tommy@email.com'
+            required
           />
           <FormInputElement
             name='password'
             type='password'
-            placeholder='password here'
-            defaultValue='pass1234'
+            placeholder='password'
+            required
           />
           <FormInputElement
             name='passwordConfirm'
             label='confirm password'
             type='password'
-            placeholder='password here'
-            defaultValue='pass1234'
+            placeholder='confirm password'
+            required
           />
           <button type='submit' className='green-btn' disabled={isSubmitting}>
             {isSubmitting ? 'submitting' : 'submit'}

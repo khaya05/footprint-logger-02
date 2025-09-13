@@ -40,7 +40,7 @@ const AllActivities = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  if (data?.length > 0) {
+  if (data?.activities?.length > 0) {
     return (
       <ActivitiesContext.Provider value={{ data, searchValues }}>
         <SearchActivity />

@@ -3,6 +3,7 @@ import { useLoaderData, useNavigate } from 'react-router-dom';
 import { ActivityForm } from '../components';
 import customFetch from '../util/customFetch';
 import { toastService } from '../util/toastUtil';
+import { useDashboardContext } from './DashboardLayout';
 
 export const editActivityLoader = async ({ params }) => {
   try {
@@ -18,11 +19,13 @@ export const editActivityLoader = async ({ params }) => {
 
 const EditActivity = () => {
   const { activity } = useLoaderData();
+  const { setCurrentTab } = useDashboardContext();
 
   const navigate = useNavigate();
 
   const handleSuccess = () => {
     navigate('/dashboard/activities');
+    setCurrentTab('Activities');
   };
 
   return (

@@ -1,4 +1,4 @@
-import { Form } from 'react-router-dom';
+import { Form, useNavigate } from 'react-router-dom';
 import { ActivityInput, ActivitySelect } from '..';
 import {
   calculateEmissions,
@@ -9,6 +9,7 @@ import {
 import { useState, useEffect } from 'react';
 import customFetch from '../../util/customFetch';
 import { toastService } from '../../util/toastUtil';
+import { useDashboardContext } from '../../pages/DashboardLayout';
 
 const ActivityForm = ({
   isEdit = false,
@@ -23,6 +24,9 @@ const ActivityForm = ({
     notes: '',
     date: new Date().toISOString().split('T')[0],
   });
+
+  const navigate = useNavigate();
+  const {setCurrentTab} = useDashboardContext()
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
@@ -100,6 +104,8 @@ const ActivityForm = ({
           timestamp: new Date().toISOString(),
         });
         toastService.success('Activity added successfully');
+        navigate('/dashboard');
+        setCurrentTab('Dashboard')
       }
 
       setIsSubmitting(false);
@@ -127,7 +133,7 @@ const ActivityForm = ({
       console.error(error);
     }
   };
-  
+
   const activityDetails = getActivityDetails(formData);
   const estimatedEmissions = calculateEmissions(formData);
 
