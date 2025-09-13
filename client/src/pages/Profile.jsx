@@ -1,7 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
-import { Form, redirect, useNavigation } from 'react-router-dom';
-import { FormInputElement, SubmitBtn } from '../components';
-import { useDashboardContext } from './DashboardLayout';
+import { Form, redirect, useLoaderData, useNavigation } from 'react-router-dom';
+import { FormInputElement } from '../components';
 import customFetch from '../util/customFetch';
 import { toastService } from '../util/toastUtil';
 
@@ -30,9 +29,20 @@ export const updateProfileAction = async ({ request }) => {
   }
 };
 
+export const updateProfileLoader = async () => {
+  try {
+    const { data } = await customFetch.get('/users/current-user');
+    return { data };
+  } catch (error) {
+    toastService.error(error?.response?.data?.msg || 'Update failed.');
+    return { error: error?.response?.data?.msg };
+  }
+};
+
 const Profile = () => {
-  const { user } = useDashboardContext();
-  const { name, lastName, email } = user;
+  const { data } = useLoaderData();
+  const { name, lastName, email } = data.user;
+
   const navigation = useNavigation();
   const isSubmitting = navigation.state === 'submitting';
 

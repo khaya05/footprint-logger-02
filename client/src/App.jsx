@@ -18,9 +18,10 @@ import { ToastServiceConnector } from './components/Toast/ToastServiceConnector'
 import ToastContainer from './components/Toast/ToastContainer';
 import { LoginAction } from './pages/Login';
 import { dashboardLoader } from './pages/DashboardLayout';
-import { updateProfileAction } from './pages/Profile';
+import { updateProfileAction, updateProfileLoader } from './pages/Profile';
 import { activitiesLoader } from './pages/AllActivities';
 import { editActivityLoader } from './pages/EditActivity';
+import { dashboardLoaderStats } from './pages/Stats';
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,7 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <Stats />,
+            loader: dashboardLoaderStats,
           },
           {
             path: 'activities',
@@ -59,6 +61,7 @@ const router = createBrowserRouter([
             path: 'profile',
             element: <Profile />,
             action: updateProfileAction,
+            loader: updateProfileLoader
           },
           {
             path: 'add-activity',

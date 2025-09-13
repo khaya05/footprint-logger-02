@@ -1,9 +1,10 @@
 /* eslint-disable react-refresh/only-export-components */
-import { useLoaderData } from 'react-router-dom';
-import { ActivityCard, SearchActivity } from '../components';
+import { useLoaderData, useNavigate, useLocation } from 'react-router-dom';
+import { ActivityCard, NoActivities, SearchActivity } from '../components';
 import customFetch from '../util/customFetch';
 import { toastService } from '../util/toastUtil';
 import { createContext, useContext } from 'react';
+import Pagination from '@mui/material/Pagination';
 
 const ActivitiesContext = createContext();
 
@@ -12,15 +13,12 @@ export const activitiesLoader = async ({ request }) => {
     const params = Object.fromEntries([
       ...new URL(request.url).searchParams.entries(),
     ]);
-    
+
     const { data } = await customFetch('/activities', {
-      params
+      params,
     });
 
-    return { data, 
-      searchValues: { ...params } 
-    };
-
+    return { data, searchValues: { ...params } };
   } catch (error) {
     toastService.error(
       error?.response?.data?.msg || 'Failed to fetch activities'
@@ -30,23 +28,45 @@ export const activitiesLoader = async ({ request }) => {
 
 const AllActivities = () => {
   const { data, searchValues } = useLoaderData();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  return (
-    <ActivitiesContext.Provider value={{ data, searchValues }}>
-      <SearchActivity />
+  const currentPage = Number(searchValues.page) || 1;
 
-      <p className='m-4 text-xl font-bold'>Activities({data?.activities?.length})</p>
-      <div className='flex flex-col md:grid grid-cols-2 gap-2 lg:grid-cols-3 lg:gap-4'>
-        {data.activities?.length > 0 ? (
-          data.activities.map((activity) => (
+  const handlePageChange = (_, value) => {
+    const searchParams = new URLSearchParams(location.search);
+    searchParams.set('page', value);
+    navigate(`${location.pathname}?${searchParams.toString()}`);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  if (data?.length > 0) {
+    return (
+      <ActivitiesContext.Provider value={{ data, searchValues }}>
+        <SearchActivity />
+
+        <p className='m-4 text-xl font-bold'>
+          Activities ({data?.activities?.length})
+        </p>
+        <div className='flex flex-col md:grid grid-cols-2 gap-2 lg:grid-cols-3 lg:gap-4 mb-4'>
+          {data.activities.map((activity) => (
             <ActivityCard key={activity._id} activity={activity} />
-          ))
-        ) : (
-          <p className='text-gray-500'>No activities found.</p>
+          ))}
+        </div>
+
+        {data?.totalActivities > 12 && (
+          <Pagination
+            count={data.pages}
+            page={currentPage}
+            onChange={handlePageChange}
+            color='green'
+          />
         )}
-      </div>
-    </ActivitiesContext.Provider>
-  );
+      </ActivitiesContext.Provider>
+    );
+  } else {
+    return <NoActivities />;
+  }
 };
 
 export const useActivityContext = () => useContext(ActivitiesContext);

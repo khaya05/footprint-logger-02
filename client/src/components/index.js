@@ -15,6 +15,7 @@ export { default as Hero } from './Hero/Hero';
 export { default as Logo } from './Logo/Logo';
 export { default as LogoutBtn } from './Buttons/LogoutBtn';
 export { default as Modal } from './Modal/Modal';
+export { default as NoActivities } from './Activity/NoActivities.jsx';
 export { default as ProfileBtn } from './Buttons/ProfileBtn';
 export { default as SearchActivity } from './Activity/SearchActivity';
 export { default as SidebarPages } from './Sidebar/SidebarPages';

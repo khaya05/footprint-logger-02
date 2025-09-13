@@ -38,7 +38,7 @@ export const getAllActivities = asyncWrapper(async (req, res) => {
   const skip = (page - 1) * limit;
 
   const activities = await Activity.find(queryObj)
-    .select('-createdBy -createdAt -updatedAt -__v') 
+    .select('-createdBy -updatedAt -__v') 
     .sort(sortKey)
     .skip(skip)
     .limit(limit);
@@ -85,66 +85,80 @@ export const deleteActivity = asyncWrapper(async (req, res) => {
   res.status(StatusCodes.OK).json({ msg: 'Activity deleted successfully' });
 });
 
-export const getActivitiesStats = asyncWrapper(async (req, res) => {
-  const userId = new mongoose.Types.ObjectId(req.user.userId);
+// userStats
+const getEmissionsTotalForDays = async (days, userId) => {
+  const startDate = new Date();
+  startDate.setDate(startDate.getDate() - days);
 
-  // user
-  const [userStats] = await Activity.aggregate([
-    { $match: { createdBy: userId } },
+  const userObjectId = mongoose.Types.ObjectId.isValid(userId)
+    ? new mongoose.Types.ObjectId(userId)
+    : userId;
+
+  const result = await Activity.aggregate([
+    {
+      $match: {
+        createdBy: userObjectId,
+        date: { $gte: startDate }
+      }
+    },
     {
       $group: {
         _id: null,
         totalEmissions: { $sum: "$emissions" },
-        noOfActivities: { $sum: 1 },
-        avgEmission: { $avg: "$emissions" },
-      },
-    },
-  ]);
-
-  const getDaysTotal = async (days) => {
-    const lastDays = new Date();
-    lastDays.setDate(lastDays.getDate() - days)
-
-    const data = await Activity.aggregate([
-      {
-        $match: { createdBy: userId, createdAt: { $gte: lastDays } }
-      },
-      {
-        $group: {
-          _id: null,
-          emissions: { $sum: "$emissions" }
-        }
+        count: { $sum: 1 },
+        avgEmission: { $avg: "$emissions" }
       }
-    ])
-    return data[0]?.emissions || 0
-  }
-
-  const weeklySummary = await getDaysTotal(7)
-  const monthlySummary = await getDaysTotal(30)
-
-  const [community] = await Activity.aggregate([
-    {
-      $group: {
-        _id: "$createdBy",
-        avg: { $avg: "$emissions" },
-      },
-    },
-    {
-      $group: {
-        _id: null,
-        communityAvg: { $avg: "$avg" },
-      },
-    },
+    }
   ]);
+
+  return result[0] || { totalEmissions: 0, count: 0 };
+};
+
+
+export const getActivitiesStats = asyncWrapper(async (req, res) => {
+  const userId = new mongoose.Types.ObjectId(String(req.user.userId));
+  const [aggregationResult] = await Activity.aggregate([
+    {
+      $facet: {
+        userStats: [
+          { $match: { createdBy: userId } },
+          {
+            $group: {
+              _id: null,
+              totalEmissions: { $sum: "$emissions" },
+              noOfActivities: { $sum: 1 },
+              avgEmission: { $avg: "$emissions" },
+            },
+          },
+        ],
+        communityStats: [
+          {
+            $group: {
+              _id: null, 
+              communityAvg: { $avg: "$emissions" }
+            }
+          }
+        ]
+      }
+    }
+  ]);
+
+  const userStats = aggregationResult.userStats[0] || {
+    totalEmissions: 0,
+    noOfActivities: 0,
+    avgEmission: 0,
+  };
+
+  const communityAvg = aggregationResult.communityStats[0]?.communityAvg || 0;
+
+  const weeklySummary = await getEmissionsTotalForDays(7, userId)
+  const monthlySummary = await getEmissionsTotalForDays(30, userId)
 
   res.status(StatusCodes.OK).json({
-    userStats: userStats || {
-      totalEmissions: 0,
-      noOfActivities: 0,
-      avgEmission: 0,
-    },
+    userStats,
     weeklySummary,
     monthlySummary,
-    communityAvg: community ? community.communityAvg : 0,
+    communityAvg,
   });
 });
+

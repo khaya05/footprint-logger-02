@@ -4,10 +4,11 @@ const Modal = () => {
   const { setShowModal } = useDashboardContext();
   return (
     <div
-      className='absolute top-0 left-0 h-[100vh] w-full z-0 bg-black opacity-75'
+      className='absolute inset-0 bg-black/70 backdrop-blur-sm z-10'
       onClick={() => setShowModal(false)}
-    ></div>
+    />
   );
 };
+
 
 export default Modal;
