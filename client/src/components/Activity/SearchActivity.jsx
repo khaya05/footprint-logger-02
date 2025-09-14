@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Form, useSubmit, Link } from 'react-router-dom';
-import { FiSearch, FiFilter, FiRotateCcw } from 'react-icons/fi';
+import { FiFilter, FiRotateCcw } from 'react-icons/fi';
 import { CATEGORIES, SORT_OPTIONS } from '../../util/emissionFactors';
 import { useActivityContext } from '../../pages/AllActivities';
 import { FormInputElement, FormSelectElement } from '..';
@@ -12,21 +12,21 @@ const SearchActivity = () => {
 
   const submit = useSubmit();
 
-  const debounce = (onChange) =>{
+  const debounce = (onChange) => {
     let timeout;
 
-    return (e) =>{
+    return (e) => {
       const form = e.currentTarget.form;
       clearTimeout(timeout);
-      timeout = setTimeout(() =>{
-        onChange(form)
-      }, 2000)
-    }
-  }
+      timeout = setTimeout(() => {
+        onChange(form);
+      }, 2000);
+    };
+  };
 
-  const resertForm = () =>{
-    setShowFilters(false)
-  }
+  const resertForm = () => {
+    setShowFilters(false);
+  };
 
   return (
     <div className='bg-white p-4 rounded mb-8 shadow'>
@@ -59,14 +59,13 @@ const SearchActivity = () => {
 
       <Form className='space-y-4'>
         <div className='relative'>
-          {/* <FiSearch className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400' /> */}
           <FormInputElement
             type='search'
             name='search'
             defaultValue={search}
             placeholder='Search for activity or notes'
-            onChange={debounce((form) =>{
-              submit(form)
+            onChange={debounce((form) => {
+              submit(form);
             })}
           />
         </div>

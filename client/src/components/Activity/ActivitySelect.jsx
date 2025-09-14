@@ -1,5 +1,3 @@
-import React from 'react';
-
 const ActivitySelect = ({
   name,
   label,
@@ -9,7 +7,6 @@ const ActivitySelect = ({
   error,
   placeholder = 'Select...',
 }) => {
-  
   return (
     <div className='w-full mt-2'>
       <label

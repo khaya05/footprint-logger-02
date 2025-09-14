@@ -1,9 +1,8 @@
-import React from 'react'
 import Card from './Card';
 import CardContent from './CardContent';
 import { Link } from 'react-router-dom';
 
-const RecentActivities = ({recent}) => {
+const RecentActivities = ({ recent }) => {
   return (
     <Card>
       <CardContent>
@@ -42,6 +41,6 @@ const RecentActivities = ({recent}) => {
       </CardContent>
     </Card>
   );
-}
+};
 
-export default RecentActivities
+export default RecentActivities;
