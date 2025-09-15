@@ -12,7 +12,8 @@ import { CATEGORIES } from '../../util/emissionFactors';
 import { useDashboardContext } from '../../pages/DashboardLayout';
 
 const ActivityCard = ({ activity }) => {
-  const { setDeleteId, setShowConfirmDelete } = useDashboardContext();
+  const { setDeleteId, setShowConfirmDelete, setCurrentTab } =
+    useDashboardContext();
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -62,6 +63,7 @@ const ActivityCard = ({ activity }) => {
             <div className='flex space-x-2'>
               <Link
                 to={`../edit-activity/${activity._id}`}
+                onClick={() => setCurrentTab('Activities')}
                 className='p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors duration-200'
               >
                 <FaEdit size={18} />

@@ -1,8 +1,10 @@
+import { useDashboardContext } from '../../pages/DashboardLayout';
 import Card from './Card';
 import CardContent from './CardContent';
 import { Link } from 'react-router-dom';
 
 const RecentActivities = ({ recent }) => {
+  const { setCurrentTab } = useDashboardContext();
   return (
     <Card>
       <CardContent>
@@ -35,7 +37,11 @@ const RecentActivities = ({ recent }) => {
             ))}
           </tbody>
         </table>
-        <Link className='my-4 mx-auto text-green-500' to='activities'>
+        <Link
+          className='my-4 mx-auto text-green-500'
+          to='activities'
+          onClick={() => setCurrentTab('Activities')}
+        >
           See all activities
         </Link>
       </CardContent>
